@@ -1,163 +1,99 @@
 # moltbot-feishu
 
 [![npm version](https://img.shields.io/npm/v/moltbot-feishu.svg)](https://www.npmjs.com/package/moltbot-feishu)
-[![license](https://img.shields.io/npm/l/moltbot-feishu.svg)](https://github.com/AlexAnys/moltbot-feishu/blob/main/LICENSE)
 
-Feishu (飞书 / Lark) channel plugin for [Moltbot](https://github.com/moltbot/moltbot).
+让你的 AI 助手接入飞书，一行命令搞定。
 
-Connect your Feishu bot to Moltbot via **WebSocket long-connection** — no public server, domain, or HTTPS required.
+## 特点
 
-## Architecture
+- **无需服务器** — 基于 WebSocket，本地运行即可
+- **私聊+群聊** — 都支持，群里@机器人或直接提问
+- **图片文件** — 收发都行
+- **多账号** — 可以同时接多个飞书机器人
 
-```
-Feishu user → Feishu cloud ←WS→ Plugin (local) ←→ Moltbot Gateway → AI agent
-```
+## 快速开始
 
-- Feishu SDK connects outbound (no inbound port needed)
-- Each Feishu chat maps to a Moltbot session (`feishu:<chatId>`)
-- Supports both DM (p2p) and group chats
-- Smart group-chat reply filtering (responds to @mentions, questions, requests)
-- "Thinking…" placeholder UX while AI processes
+### 1. 创建飞书机器人
 
-## Installation
+1. 打开 [飞书开放平台](https://open.feishu.cn/app) → 创建企业自建应用
+2. 添加「机器人」能力
+3. 权限配置，开启：
+   - `im:message`（发消息）
+   - `im:message.group_at_msg`（群聊@消息）
+   - `im:message.p2p_msg`（私聊消息）
+4. 事件订阅 → 添加 `im.message.receive_v1` → 选择「**使用长连接接收事件**」
+5. 版本管理 → 创建版本 → 申请上线
+6. 记下 **App ID**（cli_xxx）和 **App Secret**
+
+### 2. 安装插件
 
 ```bash
 clawdbot plugins install moltbot-feishu
 ```
 
-Or via npm directly:
+### 3. 配置
 
-```bash
-npm install moltbot-feishu
-```
-
-## Setup
-
-### 1. Create Feishu Bot
-
-1. Go to [open.feishu.cn/app](https://open.feishu.cn/app) → Create self-built app
-2. Add **Bot** capability
-3. Enable permissions:
-   - `im:message` (send messages)
-   - `im:message.group_at_msg` (receive group @mentions)
-   - `im:message.p2p_msg` (receive DM)
-4. Events: add `im.message.receive_v1`, set delivery to **WebSocket long-connection**
-5. Publish the app (create version → request approval)
-6. Note the **App ID** (`cli_xxx`) and **App Secret**
-
-### 2. Configure
-
-Add to your `clawdbot.json`:
-
-```json
-{
-  "channels": {
-    "feishu": {
-      "enabled": true,
-      "appId": "cli_xxxxxxxxxx",
-      "appSecret": "your-app-secret-here",
-      "dmPolicy": "pairing"
-    }
-  }
-}
-```
-
-Or use the onboarding wizard:
+运行向导：
 
 ```bash
 clawdbot setup feishu
 ```
 
-### 3. Verify
-
-```bash
-clawdbot channels status feishu
-```
-
-## Features
-
-| Feature | Status |
-|---------|--------|
-| Text messages | ✅ |
-| Images | ✅ |
-| Video/Audio/Files | ✅ |
-| Group chat with smart filtering | ✅ |
-| "Thinking…" placeholder UX | ✅ |
-| Multi-account | ✅ |
-| Message deduplication | ✅ |
-| Onboarding wizard | ✅ |
-| Health probe | ✅ |
-
-## Configuration Options
-
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| `appId` | string | — | Feishu App ID (required) |
-| `appSecret` | string | — | Feishu App Secret (required) |
-| `enabled` | boolean | `true` | Enable/disable this account |
-| `dmPolicy` | string | `"pairing"` | DM access: `pairing`, `allowlist`, `open`, `disabled` |
-| `allowFrom` | string[] | `[]` | Allowlisted Feishu user IDs |
-| `thinkingThresholdMs` | number | `2500` | Delay before "Thinking…" (0 to disable) |
-| `botNames` | string[] | `["bot","助手"]` | Bot name patterns for group-chat detection |
-| `mediaMaxMb` | number | `5` | Max inbound media size in MB |
-
-## Multi-Account Setup
+或者直接编辑 `clawdbot.json`：
 
 ```json
 {
   "channels": {
     "feishu": {
       "enabled": true,
-      "accounts": {
-        "work": {
-          "appId": "cli_aaa",
-          "appSecret": "secret-a"
-        },
-        "personal": {
-          "appId": "cli_bbb",
-          "appSecret": "secret-b"
-        }
-      },
-      "defaultAccount": "work"
+      "appId": "cli_你的AppID",
+      "appSecret": "你的AppSecret"
     }
   }
 }
 ```
 
-## Session Keys
+### 4. 启动
 
-- DM: `feishu:<senderId>`
-- Group: `feishu:<chatId>`
+```bash
+clawdbot gateway restart
+```
 
-## Group Chat Behavior
+去飞书找你的机器人聊天吧 🎉
 
-In group chats, the bot only responds when:
-- Directly @mentioned
-- Message ends with `?` or `？`
-- Message contains question words (why, how, what, 帮, 请, 麻烦...)
-- Message starts with bot name
+## 群聊说明
 
-This prevents spam and keeps the bot focused on real requests.
+在群里，机器人不会回复每条消息（避免刷屏）。它只在以下情况回复：
 
-## Troubleshooting
+- 被 @
+- 消息以问号结尾
+- 消息包含"帮"、"请"、"怎么"等求助词
 
-### "Missing appId or appSecret"
-Ensure credentials are set in `clawdbot.json` under `channels.feishu`.
+## 常见问题
 
-### Bot not receiving messages
-1. Check app is published and approved in Feishu admin console
-2. Verify `im.message.receive_v1` event is enabled with WebSocket delivery
-3. Run `clawdbot channels status feishu` to check connection status
+**Q: 机器人收不到消息？**
 
-### Group chat not responding
-Bot requires @mention or recognized question pattern. Try @mentioning the bot directly.
+检查：
+1. 应用已发布上线（不是草稿状态）
+2. 事件订阅选的是「长连接」不是「webhook」
+3. 权限都开了
 
-## Links
+**Q: 群聊不回复？**
 
-- [Moltbot Documentation](https://docs.molt.bot)
-- [Feishu Open Platform](https://open.feishu.cn)
-- [GitHub Issues](https://github.com/AlexAnys/moltbot-feishu/issues)
+试试 @机器人，或者在消息末尾加个问号。
 
-## License
+**Q: 怎么查看状态？**
 
-MIT © Alex Yang
+```bash
+clawdbot channels status feishu
+```
+
+## 链接
+
+- [Moltbot 文档](https://docs.molt.bot)
+- [飞书开放平台文档](https://open.feishu.cn/document/home/index)
+- [问题反馈](https://github.com/AlexAnys/moltbot-feishu/issues)
+
+## 协议
+
+MIT
