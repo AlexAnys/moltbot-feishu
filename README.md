@@ -1,6 +1,6 @@
-# openclaw-feishu
+# feishu-openclaw
 
-[![npm version](https://img.shields.io/npm/v/openclaw-feishu.svg)](https://www.npmjs.com/package/openclaw-feishu)
+[![npm version](https://img.shields.io/npm/v/feishu-openclaw.svg)](https://www.npmjs.com/package/feishu-openclaw)
 
 > **🆕 2025.1.31 更新**：v0.2.0 多版本兼容，修复 Zod schema 问题，支持 Clawdbot / OpenClaw
 
@@ -14,7 +14,7 @@ Connect your AI assistant to Feishu (Lark) — no server required.
 | 方式 | 命令 | 适合 | 链接 |
 |------|------|------|------|
 | **① Clawdbot 一键** | 告诉 Clawdbot：`帮我安装飞书插件` | 新手首选 | — |
-| **② npm 插件** ⬅️ | `clawdbot plugins install openclaw-feishu` | 开发者 | [npm](https://www.npmjs.com/package/openclaw-feishu) |
+| **② npm 插件** ⬅️ | `clawdbot plugins install feishu-openclaw` | 开发者 | [npm](https://www.npmjs.com/package/feishu-openclaw) |
 | **③ 独立桥接** | `git clone` + 手动启动 | 生产/隔离 | [GitHub](https://github.com/AlexAnys/feishu-openclaw) |
 
 ### 方式对比 / Comparison
@@ -96,11 +96,11 @@ clawdbot config set channels.feishu.appSecretPath "/path/to/file"
 
 ## 链接 / Links
 
-- 📦 [npm: openclaw-feishu](https://www.npmjs.com/package/openclaw-feishu)
-- 🔌 [GitHub: openclaw-feishu](https://github.com/AlexAnys/openclaw-feishu) (插件)
+- 📦 [npm: feishu-openclaw](https://www.npmjs.com/package/feishu-openclaw)
+- 🔌 [GitHub: feishu-openclaw](https://github.com/AlexAnys/feishu-openclaw) (插件)
 - 🌉 [GitHub: feishu-openclaw](https://github.com/AlexAnys/feishu-openclaw) (桥接)
 - 📖 [Clawdbot 文档](https://docs.clawd.bot)
-- 🐛 [问题反馈](https://github.com/AlexAnys/openclaw-feishu/issues)
+- 🐛 [问题反馈](https://github.com/AlexAnys/feishu-openclaw/issues)
 
 ## License
 
