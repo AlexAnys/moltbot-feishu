@@ -1,8 +1,8 @@
-# moltbot-feishu
+# openclaw-feishu
 
-[![npm version](https://img.shields.io/npm/v/moltbot-feishu.svg)](https://www.npmjs.com/package/moltbot-feishu)
+[![npm version](https://img.shields.io/npm/v/openclaw-feishu.svg)](https://www.npmjs.com/package/openclaw-feishu)
 
-> **🆕 2025.1.31 更新**：v0.2.0 多版本兼容，修复 Zod schema 问题，支持 Clawdbot / OpenClaw / Moltbot
+> **🆕 2025.1.31 更新**：v0.2.0 多版本兼容，修复 Zod schema 问题，支持 Clawdbot / OpenClaw
 
 让 AI 助手接入飞书，无需服务器。  
 Connect your AI assistant to Feishu (Lark) — no server required.
@@ -11,11 +11,11 @@ Connect your AI assistant to Feishu (Lark) — no server required.
 
 ## 🚀 三种安装方式 / Three Install Methods
 
-| 方式 | 命令 | 适合 |
-|------|------|------|
-| **① Clawdbot 一键安装** | 告诉你的 Clawdbot：`帮我安装飞书插件` | 新手首选，全自动 |
-| **② npm 插件安装** | `clawdbot plugins install moltbot-feishu` | 开发者，一体化管理 |
-| **③ 独立桥接** | [feishu-openclaw](https://github.com/AlexAnys/feishu-openclaw) | 求稳/隔离部署 |
+| 方式 | 命令 | 适合 | 链接 |
+|------|------|------|------|
+| **① Clawdbot 一键** | 告诉 Clawdbot：`帮我安装飞书插件` | 新手首选 | — |
+| **② npm 插件** ⬅️ | `clawdbot plugins install openclaw-feishu` | 开发者 | [npm](https://www.npmjs.com/package/openclaw-feishu) |
+| **③ 独立桥接** | `git clone` + 手动启动 | 生产/隔离 | [GitHub](https://github.com/AlexAnys/feishu-openclaw) |
 
 ### 方式对比 / Comparison
 
@@ -96,8 +96,8 @@ clawdbot config set channels.feishu.appSecretPath "/path/to/file"
 
 ## 链接 / Links
 
-- 📦 [npm: moltbot-feishu](https://www.npmjs.com/package/moltbot-feishu)
-- 🔌 [GitHub: moltbot-feishu](https://github.com/AlexAnys/openclaw-feishu) (插件)
+- 📦 [npm: openclaw-feishu](https://www.npmjs.com/package/openclaw-feishu)
+- 🔌 [GitHub: openclaw-feishu](https://github.com/AlexAnys/openclaw-feishu) (插件)
 - 🌉 [GitHub: feishu-openclaw](https://github.com/AlexAnys/feishu-openclaw) (桥接)
 - 📖 [Clawdbot 文档](https://docs.clawd.bot)
 - 🐛 [问题反馈](https://github.com/AlexAnys/openclaw-feishu/issues)
