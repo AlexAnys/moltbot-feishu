@@ -23,10 +23,10 @@ jobs:
       - name: Install deps
         run: npm ci
 
-      - name: Typecheck
-        run: npm run typecheck
-
-      - name: Build
+      # NOTE: this repo uses a dual-build script that generates src/sdk.ts temporarily.
+      # Running plain "tsc --noEmit" without that generation will fail.
+      # The build step runs tsc for both OpenClaw and Clawdbot targets and effectively serves as typecheck.
+      - name: Build (includes TypeScript compile)
         run: npm run build
 
       - name: Pack (simulate publish artifact)
